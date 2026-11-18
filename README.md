@@ -21,7 +21,7 @@ A principal diferença está no nível de virtualização: uma máquina virtual 
 
 ### Evidência 1 - Contêiner em Execução 
 
-* Comando Ultilizado :
+Comando Ultilizado :
 Docker ps
 
  docker ps
