@@ -28,5 +28,57 @@ Docker ps
  
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
+### Evidência 2 - Página Personalizada 
+Comando Ultilizado :
+Curl http://localhost:8090
 
 
+## 3.EXECUÇÃO DA APLICAÇÃO NO KUBERNETS
+### Evidência 3 - Deployment e Pod
+Comando Ultilizado :
+kubectl get pods
+
+
+## 4.ESCABILIDADE E AUTORRECUPERAÇÃO 
+### Evidência 4 - ESCABILIDADE 
+Comando Ultilizado :
+Kubectl scale deployment comunicado-we --replicas=3
+
+kubectl get pods
+
+### Evidência 5 - Autorrecuperação
+Comando Ultilizado :
+kubectl delete pod NOME_DO_POD
+
+Kubectl get pods
+
+## 5.DISPONIBILIZAÇÃO DA APLICAÇÃO 
+### Evidência 6 - Service e acesso HTTP
+Comando Ultilizado :
+kubectl get services 
+
+kubectl run teste --image=curLimagem/curl --rm -it --restart=Never --curl http://comunicado-service
+
+
+ 6.INTERPRETAÇÃO DOS RESULTADOS
+ ### Questão 1 - Qual é a diferença entre uma Imagem Docker e um Contêiner em Execução ?
+ * RESPOSTA:
+
+
+### Questão 2 - Qual é a Função de Um Deployment no Kubernets?
+ * RESPOSTA:
+
+### Questão 3 - O que aconteceu quando você excluiu um Pod?Por Que isso aconteceu?
+ * RESPOSTA:
+
+### Questão 4 - Qual é a finalidade de um Service no Kubernetes ?
+ * RESPOSTA:
+
+### 7.CONCLUSÃO 
+
+
+
+## 8.INDENTIFICAÇÃO DA ENTREGA 
+
+### PEDRO HENRIQUE PRIVADO ALVES
+### DATA DA REALIZAÇÃO 18/11/2026
