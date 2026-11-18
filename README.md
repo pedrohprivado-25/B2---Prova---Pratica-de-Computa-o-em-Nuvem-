@@ -21,7 +21,7 @@ A principal diferença está no nível de virtualização: uma máquina virtual 
 *Comando Ultilizado :
 Docker ps
 
-docker ps
+*# docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 
