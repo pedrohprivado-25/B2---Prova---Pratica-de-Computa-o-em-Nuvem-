@@ -25,6 +25,7 @@ Comando Ultilizado :
 Docker ps
 
  docker ps
+ 
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 
