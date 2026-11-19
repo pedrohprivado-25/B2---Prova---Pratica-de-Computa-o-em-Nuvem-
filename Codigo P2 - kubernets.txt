@@ -1,0 +1,171 @@
+kubectl get nodes
+NAME           STATUS   ROLES           AGE   VERSION
+controlplane   Ready    control-plane   13d   v1.37.1
+node01         Ready    <none>          13d   v1.37.1
+
+ocker --version
+Docker version 29.1.3, build 29.1.3-0ubuntu3~24.04.2
+
+ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+mkdir -p ~/p2-computacao-nuvem/docker
+cd ~/p2-computacao-nuvem/docker 
+
+cat > index.html <<'EOF'
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Aplicação</title>
+</head>
+<body>
+    <h1>Olá! Seja bem-vindo à minha aplicação!</h1>
+    <p>Aplicação desenvolvida por Pedro.</p>
+    <p>Atividade prática de Computação em Nuvem.</p>
+</body>
+</html>
+EOF 
+
+ docker run -d \
+--name comunicado-web \
+-p 8090:80 \
+-v "$PWD/index.html":/usr/share/nginx/html/index.html:ro \
+nginx:alpine 
+Unable to find image 'nginx:alpine' locally
+alpine: Pulling from library/nginx
+881fc932939e: Pull complete 
+77a3bfea78f5: Pull complete 
+04c3905a997c: Pull complete 
+7cb374baf968: Pull complete 
+4c8c172c6586: Pull complete 
+1dc588c89da1: Pull complete 
+61d8f4c85a74: Pull complete 
+c4f3d97811f6: Pull complete 
+Digest: sha256:0563c36f94a6d3ec3584161b77859f740f7e20b4853f52c796a864ce6908e8ea
+Status: Downloaded newer image for nginx:alpine
+8a72cb2b70e3f45d6039f426f1adbbd1dc90bd6ca220ef68d99ac2a641a0004b
+
+docker ps 
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS                                     NAMES
+8a72cb2b70e3   nginx:alpine   "/docker-entrypoint.…"   About a minute ago   Up About a minute   0.0.0.0:8090->80/tcp, [::]:8090->80/tcp   comunicado-web
+
+curl http://localhost:8090 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Aplicação</title>
+</head>
+<body>
+    <h1>Olá! Seja bem-vindo à minha aplicação!</h1>
+    <p>Aplicação desenvolvida por Pedro.</p>
+    <p>Atividade prática de Computação em Nuvem.</p>
+</body>
+</html>
+
+cd ~/p2-computacao-nuvem 
+kubectl create configmap comunicado-html \
+--from-file=index.html=docker/index.html 
+configmap/comunicado-html created
+
+mkdir -p kubernetes
+cd kubernetes 
+
+cat > deployment.yaml <<'EOF'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comunicado-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comunicado-web
+  template:
+    metadata:
+      labels:
+        app: comunicado-web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: pagina-html
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+      volumes:
+        - name: pagina-html
+          configMap:
+            name: comunicado-html
+EOF 
+
+kubectl apply -f deployment.yaml 
+deployment.apps/comunicado-web created
+
+ kubectl get pods 
+NAME                              READY   STATUS    RESTARTS   AGE
+comunicado-web-7749ff8c78-22j5z   1/1     Running   0          13s
+
+kubectl scale deployment comunicado-web --replicas=3 
+deployment.apps/comunicado-web scaled
+
+ kubectl get pods 
+NAME                              READY   STATUS    RESTARTS   AGE
+comunicado-web-7749ff8c78-22j5z   1/1     Running   0          4m36s
+comunicado-web-7749ff8c78-9xgtf   1/1     Running   0          45s
+comunicado-web-7749ff8c78-mqhqr   1/1     Running   0          45s
+
+kubectl delete pod comunicado-web-7749ff8c78-22j5z 
+pod "comunicado-web-7749ff8c78-22j5z" deleted from default namespace
+
+kubectl get pods 
+NAME                              READY   STATUS    RESTARTS   AGE
+comunicado-web-7749ff8c78-9mkt5   1/1     Running   0          19s
+comunicado-web-7749ff8c78-9xgtf   1/1     Running   0          3m47s
+comunicado-web-7749ff8c78-mqhqr   1/1     Running   0          3m47s
+
+cat > service.yaml <<'EOF'
+apiVersion: v1
+kind: Service
+metadata:
+  name: comunicado-service
+spec:
+  selector:
+    app: comunicado-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+EOF
+
+kubectl apply -f service.yaml 
+service/comunicado-service created
+
+kubectl get services 
+NAME                 TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+comunicado-service   ClusterIP   10.98.23.66   <none>        80/TCP    14s
+kubernetes           ClusterIP   10.96.0.1     <none>        443/TCP   13d
+
+kubectl run teste --image=curlimages/curl --restart=Never --command -- sh -c 'curl -s http://comunicado-service; sleep 5' 
+pod/teste created
+
+kubectl logs teste 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Aplicação</title>
+</head>
+<body>
+    <h1>Olá! Seja bem-vindo à minha aplicação!</h1>
+    <p>Aplicação desenvolvida por Pedro.</p>
+    <p>Atividade prática de Computação em Nuvem.</p>
+</body>
+</html>
+
+
+
