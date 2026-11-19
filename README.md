@@ -76,18 +76,26 @@ kubectl run teste --image=curLimagem/curl --rm -it --restart=Never --curl http:/
  ### Questão 1 - Qual é a diferença entre uma Imagem Docker e um Contêiner em Execução ?
  * RESPOSTA:
 
+A imagem Docker funciona como um modelo que contém tudo o que é necessário para executar uma aplicação. Já o contêiner é a aplicação funcionando a partir dessa imagem. Ou seja, a imagem serve como base para criar o contêiner.
 
 ### Questão 2 - Qual é a Função de Um Deployment no Kubernets?
  * RESPOSTA:
 
+O Deployment é responsável por gerenciar os Pods da aplicação, garantindo que a quantidade de réplicas configurada continue funcionando. Ele também permite atualizar a aplicação e manter seu funcionamento.
+
 ### Questão 3 - O que aconteceu quando você excluiu um Pod?Por Que isso aconteceu?
  * RESPOSTA:
 
+Quando excluí um Pod, o Kubernetes identificou que a quantidade de Pods estava abaixo do esperado e criou outro automaticamente para manter as três réplicas configuradas. Isso aconteceu porque o Deployment acompanha e controla a quantidade de Pods da aplicação.
+
 ### Questão 4 - Qual é a finalidade de um Service no Kubernetes ?
  * RESPOSTA:
+ * 
+O Service permite a comunicação com os Pods da aplicação, criando um endereço fixo para acessá-los. Assim, mesmo que um Pod seja excluído e outro seja criado, não é necessário mudar a forma de acessar a aplicação.
 
 ### 7.CONCLUSÃO 
 
+Durante esta atividade, aprendi a executar uma aplicação utilizando Docker e Kubernetes. Também pratiquei a criação de um Deployment, o aumento da quantidade de réplicas e a autorrecuperação dos Pods. Além disso, entendi como funciona o Service e como ele permite acessar a aplicação. Essa atividade ajudou a reforçar na prática os conteúdos estudados nas aulas de Computação em Nuvem.
 
 
 ## 8.INDENTIFICAÇÃO DA ENTREGA 
