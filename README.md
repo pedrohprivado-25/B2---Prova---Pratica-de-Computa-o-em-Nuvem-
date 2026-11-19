@@ -21,6 +21,7 @@ A principal diferença está no nível de virtualização: uma máquina virtual 
 ## 2.EXECUÇÃO DA APLICAÇÃO COM DOCKER
 
 ### Evidência 1 - Contêiner em Execução 
+![Evidência 1](evidencias/evidencia1.png)
 
 Comando Ultilizado :
 Docker ps
