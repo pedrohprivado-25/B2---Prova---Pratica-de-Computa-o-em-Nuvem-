@@ -31,24 +31,28 @@ Docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ### Evidência 2 - Página Personalizada 
+![Evidência 2](evidencias/evidencia2.png)
 Comando Ultilizado :
 Curl http://localhost:8090
 
 
 ## 3.EXECUÇÃO DA APLICAÇÃO NO KUBERNETS
 ### Evidência 3 - Deployment e Pod
+![Evidência 3](evidencias/evidencia3.png)
 Comando Ultilizado :
 kubectl get pods
 
 
 ## 4.ESCABILIDADE E AUTORRECUPERAÇÃO 
 ### Evidência 4 - ESCABILIDADE 
+![Evidência 4](evidencias/evidencia4.png)
 Comando Ultilizado :
 Kubectl scale deployment comunicado-we --replicas=3
 
 kubectl get pods
 
 ### Evidência 5 - Autorrecuperação
+![Evidência 5](evidencias/evidencia5.png)
 Comando Ultilizado :
 kubectl delete pod NOME_DO_POD
 
@@ -56,6 +60,7 @@ Kubectl get pods
 
 ## 5.DISPONIBILIZAÇÃO DA APLICAÇÃO 
 ### Evidência 6 - Service e acesso HTTP
+![Evidência 6](evidencias/evidencia6.png)
 Comando Ultilizado :
 kubectl get services 
 
