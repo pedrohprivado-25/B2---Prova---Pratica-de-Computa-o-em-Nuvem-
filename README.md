@@ -58,7 +58,7 @@ kubectl get pods
 ![Evidência 5](evidencias/evidencia5.png)
 
 Comando Ultilizado :
-kubectl delete pod NOME_DO_POD
+kubectl delete pod comunicado-web-7749ff8c78-22j5z 
 
 Kubectl get pods
 
