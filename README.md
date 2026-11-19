@@ -72,7 +72,7 @@ kubectl get services
 kubectl run teste --image=curLimagem/curl --rm -it --restart=Never --curl http://comunicado-service
 
 
- 6.INTERPRETAÇÃO DOS RESULTADOS
+ ## 6.INTERPRETAÇÃO DOS RESULTADOS
  ### Questão 1 - Qual é a diferença entre uma Imagem Docker e um Contêiner em Execução ?
  * RESPOSTA:
 
